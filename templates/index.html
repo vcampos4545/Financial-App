@@ -1,0 +1,18 @@
+{% extends 'template.html' %}
+{% block title %}Market Summary{% endblock %}
+{% block main %}
+    <h1>Market Summary</h1>
+    <table>
+        <tr>
+            <td colspan='3'>
+                <img src="https://finviz.com/chart.ashx?t=SPY&ty=c&ta=1&p=d&s=l" alt="">
+            </td>
+        </tr>
+        <tr>
+            <td colspan='3'>
+                <img src="https://finviz.com/map.ashx?t=sec">
+            </td>
+        </tr>
+    </table>
+    
+{% endblock %}
