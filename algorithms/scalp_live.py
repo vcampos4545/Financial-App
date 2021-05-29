@@ -1,8 +1,8 @@
-from util.oanda_api import get_candlestick_data, market_order, get_balance, get_account
-from util.indicators import EMA, fractals
 import time
 import datetime as dt
 import numpy as np
+from algorithms.modules.oanda_api import get_candlestick_data, market_order, get_balance, get_account
+from algorithms.modules.indicators import EMA, fractals
 
 class Strategy():
     def __init__(self):

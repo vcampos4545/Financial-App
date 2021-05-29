@@ -1,9 +1,10 @@
-import os, csv
+import os
 import talib
 import yfinance as yf
 import pandas
 import datetime as dt
-from flask import Flask, escape, request, render_template
+import threading
+from flask import Flask, request, render_template
 from talib_patterns import candlestick_patterns
 from chartlib import consolidating_stocks, breakout_stocks
 from scraper import get_tickers, get_SANDP_tickers, get_sentiment
@@ -13,19 +14,20 @@ app = Flask(__name__)
 
 @app.route('/algorithms')
 def algorithms():
+    status = 'No Algorithm running'
     path = os.getcwd()
     algos = os.listdir(path+'/algorithms')
     for i,a in enumerate(algos):
         if a[-3:] != '.py':
             del algos[i]
-
     algo = request.args.get('algo', False)
-    print(algo)
     if algo == 'scalp_live.py':
-        strat = getattr(scalp_live,'Strategy')
-        strat.run()
+        strat = getattr(scalp_live,'Strategy')()
+        thread = threading.Thread(target=strat.run)
+        thread.start()
+        status = 'scalp_live.py - running'
     
-    return render_template('algorithms.html',algos=algos)
+    return render_template('algorithms.html',algos=algos,status=status)
 
 @app.route('/updateData')
 def updateData():
