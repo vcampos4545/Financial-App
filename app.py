@@ -7,8 +7,25 @@ from flask import Flask, escape, request, render_template
 from talib_patterns import candlestick_patterns
 from chartlib import consolidating_stocks, breakout_stocks
 from scraper import get_tickers, get_SANDP_tickers, get_sentiment
+from algorithms import scalp_live
 
 app = Flask(__name__)
+
+@app.route('/algorithms')
+def algorithms():
+    path = os.getcwd()
+    algos = os.listdir(path+'/algorithms')
+    for i,a in enumerate(algos):
+        if a[-3:] != '.py':
+            del algos[i]
+
+    algo = request.args.get('algo', False)
+    print(algo)
+    if algo == 'scalp_live.py':
+        strat = getattr(scalp_live,'Strategy')
+        strat.run()
+    
+    return render_template('algorithms.html',algos=algos)
 
 @app.route('/updateData')
 def updateData():

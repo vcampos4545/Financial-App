@@ -1,0 +1,17 @@
+{% extends 'template.html' %}
+{% block title %}Market Summary{% endblock %}
+{% block main %}
+    <h1>Algorithms</h1>
+    <form>
+        <select name="algo">
+            <option value="">-- Select an algorithm --</option>
+            {% for algo in algos %}
+            <option value={{algo}}>{{algo}}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Start Algo" />
+    </form>
+    
+
+    
+{% endblock %}
